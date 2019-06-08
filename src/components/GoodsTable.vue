@@ -103,9 +103,10 @@ export default {
                 color $white
 
     &__content-text
+        text-align center
         display inline-block
         padding-left 10px
-        width 30px
+        width 70px
 
 th, td
     width 33%

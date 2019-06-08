@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="basket__content-item" v-for="good in basket" v-bind:key="good.id">
+            <tr class="basket__content-item" v-for="good in getGoodsFromBasket" v-bind:key="good.id">
                 <td>{{ good.name }}</td>
                 <td>
                     <input type="number" id="" min="1" v-model="good.quantity">
@@ -24,9 +24,9 @@
                     </span>
                 </td>
             </tr>
-            <tr class="basket__content-item_right">
-                <td colspan="3">
-                    Общая стоимость: {{ getSum() }}
+            <tr>
+                <td colspan="4" class="basket__content-item__sum">
+                    Общая стоимость: {{ getBasketSum }}
                 </td>
             </tr>
         </tbody>
@@ -34,17 +34,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'Basket',
-    computed: mapState([ 'basket' ]),
+    computed: mapGetters([ 'getGoodsFromBasket', 'getBasketSum' ]),
     methods: {
-        getSum() {
-            return this.basket.reduce((result, good) => {
-                return result += good.price
-            }, 0)
-        },
         removeFromBasket(id) {
             this.$store.commit('removeFromBasket', id)
         }
@@ -66,7 +61,7 @@ export default {
     &__content-item
         font-size 1em
 
-        &_right
+        &__sum
             margin-top 10px
             text-align right 
 
@@ -80,7 +75,6 @@ export default {
             color $tomato
             &:hover
                 text-decoration underline
-
 
 th, td
     width 25%
