@@ -8,21 +8,32 @@
 
 <script>
 import GoodsTable from './GoodsTable'
-import { mapState } from 'vuex'
 
 export default {
     name: 'Catalog',
     components: {
         GoodsTable
     },
-    computed: mapState([ 'categories', 'basket' ]),
-    methods: {
-        getGoods(id) {
-            return this.$store.getters.getGoodsByGroupId(id)
+    computed: {
+        categories() {
+            return this.$store.state.categories
+        },
+        basket() {
+            return this.$store.state.basket
+        },
+        getGoods() {
+            return this.$store.getters.getGoodsByGroupId
         }
     },
     created() {
         this.$store.dispatch('fetchData')
+
+        this.interval = setInterval(() => {
+            this.$store.dispatch('fetchData')
+        }, 15000)
+    },
+    destroyed() {
+        clearInterval(this.interval)
     }
 }
 </script>

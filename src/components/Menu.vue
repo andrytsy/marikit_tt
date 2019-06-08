@@ -8,23 +8,28 @@
                 <a href="#/basket">Корзина</a>
             </li>
             <li class="menu__basket-message">
-                <span v-if="basket.length">
-                    В корзине: {{ basket.length }} 
+                <span v-if="getGoodsInBasketQuantity">
+                    В корзине: {{ getGoodsInBasketQuantity }} 
                 </span>
                 <span v-else>
                     В вашей корзине пока ничего нет
                 </span>
+            </li>
+            <li class="menu__currencies">
+                <Currencies />
             </li>
         </ul>
     </nav>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import Currencies from './Currencies.vue'
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'Menu',
-    computed: mapState([ 'basket' ])
+    components: { Currencies },
+    computed: mapGetters([ 'getGoodsInBasketQuantity' ])
 }
 </script>
 
@@ -54,4 +59,8 @@ export default {
     &__basket-message
         color $gray
         display inline-block
+
+    &__currencies
+        display inline-block
+        float right
 </style>

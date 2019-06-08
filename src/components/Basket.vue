@@ -12,7 +12,7 @@
             <tr class="basket__content-item" v-for="good in getGoodsFromBasket" v-bind:key="good.id">
                 <td>{{ good.name }}</td>
                 <td>
-                    <input type="number" id="" min="1" v-model="good.quantity">
+                    <input type="number" id="" min="1" v-model="good.quantity" v-on:input="chageQuantity(good)">
                 </td>
                 <td>
                     {{ good.price }}
@@ -42,6 +42,9 @@ export default {
     methods: {
         removeFromBasket(id) {
             this.$store.commit('removeFromBasket', id)
+        },
+        chageQuantity(item) {
+            this.$store.commit('setQuantity', item)
         }
     }
 }
