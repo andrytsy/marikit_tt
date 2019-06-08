@@ -62,6 +62,10 @@ const store = new Vuex.Store({
         },
         addToBasket(state, good) {
             state.basket.push(good)
+        },
+        removeFromBasket(state, id) {
+            let index = state.basket.findIndex(item => item.id === id)
+            state.basket.splice(index, 1)
         }
     },
     actions: {

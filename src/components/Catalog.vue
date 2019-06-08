@@ -1,6 +1,5 @@
 <template>
     <div>
-        <a href="#/basket">В КОРЗИНУ</a>
         <section v-for="category in categories" v-bind:key="category.id">
             <GoodsTable :data="category" :goods="getGoods(category.id)" />
         </section>
@@ -16,7 +15,7 @@ export default {
     components: {
         GoodsTable
     },
-    computed: mapState([ 'categories' ]),
+    computed: mapState([ 'categories', 'basket' ]),
     methods: {
         getGoods(id) {
             return this.$store.getters.getGoodsByGroupId(id)

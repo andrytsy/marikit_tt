@@ -63,20 +63,25 @@ export default {
     border-spacing 0
 
     &__header
+        color $gray
+        width 100%
+        font-size 1.2em
         text-align left
         display inline-block
-        font-size 1.2em
-        width 100%
-        color $gray
+        border-bottom 1px solid $light-gray
+        cursor pointer
+        &:hover
+            background-color $light-blue
+            color $royalblue
     
     &__header-icon
         padding 10px
         vertical-align middle
+        transform rotateX(180deg)
 
         &_expand
             padding 10px
             vertical-align middle
-            transform rotateX(180deg)
 
     &__content
         height 0px
@@ -84,29 +89,31 @@ export default {
         overflow hidden
         transition 1s
 
+        & tr
+            display flex
+            flex-direction row
+            white-space nowrap
+            border-bottom 1px solid $light-gray
+            cursor pointer
+            &:hover
+                background-color $light-blue
+                color $royalblue
+            &:active
+                background-color $seagreen
+                color $white
+
     &__content-text
         display inline-block
         padding-left 10px
         width 30px
 
-    & tr
-        display flex
-        flex-direction row
-        white-space nowrap
-        cursor pointer
-        border-bottom 1px solid $light-gray
-        &:hover
-            background-color $light-blue
-        &:active
-            background-color $tomato
-
-    & th, td
-        overflow hidden
-        text-overflow ellipsis
-        width 33%
-        padding 10px
-        cursor pointer
-        text-align right 
-        &:first-child
-            text-align left 
+th, td
+    width 33%
+    padding 10px
+    text-align right 
+    text-overflow ellipsis
+    overflow hidden
+    cursor pointer
+    &:first-child
+        text-align left 
 </style>

@@ -1,40 +1,36 @@
 <template>
-    <div>
-        <a href="#/">В КАТАЛОГ</a>
-        <table class="basket">
-            <thead>
-                <tr class="basket__header">
-                    <th>
-                        Наименование товара и описание 
-                    </th>
-                    <th>
-                        Количество
-                    </th>
-                    <th>
-                        Цена
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="basket__content-item" v-for="good in basket" v-bind:key="good.id">
-                    <td>
-                        {{ good.name }}
-                    </td>
-                    <td>
-                        {{ good.quantity }}
-                    </td>
-                    <td>
-                        {{ good.price }}
-                    </td>
-                </tr>
-                <tr class="basket__content-item_right">
-                    <td colspan="3">
-                        Общая стоимость: {{ getSum() }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="basket">
+        <thead>
+            <tr class="basket__header">
+                <th>Наименование товара и описание</th>
+                <th>Количество</th>
+                <th>Цена</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="basket__content-item" v-for="good in basket" v-bind:key="good.id">
+                <td>{{ good.name }}</td>
+                <td>
+                    <input type="number" id="" min="1" v-model="good.quantity">
+                </td>
+                <td>
+                    {{ good.price }}
+                    <span class="basket__content-item__small-text">/шт.</span>
+                </td>
+                <td>
+                    <span class="basket__content-item__remove-btn" v-on:click="removeFromBasket(good.id)">
+                        Удалить
+                    </span>
+                </td>
+            </tr>
+            <tr class="basket__content-item_right">
+                <td colspan="3">
+                    Общая стоимость: {{ getSum() }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </template>
 
 <script>
@@ -48,28 +44,51 @@ export default {
             return this.basket.reduce((result, good) => {
                 return result += good.price
             }, 0)
+        },
+        removeFromBasket(id) {
+            this.$store.commit('removeFromBasket', id)
         }
     }
 }
 </script>
 
 <style lang="stylus" scoped>
+@import '../assets/styles/variables.styl'
+
 .basket
-    text-align left 
-    border-left 1px solid #555
-    padding-left 30px
+    width 100%
+    color $gray
 
     &__header
+        font-size 1.2em
         padding 10px 0px
-        font-weight 800
-        color #555
-        font-size 0.9em
+
     &__content-item
-        color #444
         font-size 1em
 
         &_right
             margin-top 10px
             text-align right 
+
+        &__small-text
+            font-size 0.8em
+            color $light-gray
+
+        &__remove-btn
+            font-family 'Libre Franklin BoldItalic'
+            cursor pointer
+            color $tomato
+            &:hover
+                text-decoration underline
+
+
+th, td
+    width 25%
+    padding 10px
+    text-align right 
+    text-overflow ellipsis
+    overflow hidden
+    &:first-child
+        text-align left 
 </style>
 
