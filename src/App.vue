@@ -10,4 +10,10 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="stylus">
+@import './assets/styles/fonts.styl'
+
+#app
+    font-family 'Libre Franklin Regular', 'Arial', 'sans-serif'
+    font-size 100%
+</style>

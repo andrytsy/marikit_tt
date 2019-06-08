@@ -5,10 +5,6 @@ import goodsNames from '../fixtures/names.js'
 
 Vue.use(Vuex)
 
-// function getPrice() {
-
-// }
-
 function getName() {
     try {
         return goodsNames[this.G].B[this.T].N
@@ -25,7 +21,7 @@ function getPrepareData() {
             id: item.T,
             groupId: item.G,
             name: getName.call(item),
-            quantity: item.P,
+            avalible: item.P,
             price: item.C
         }
     })
@@ -47,7 +43,8 @@ function getCategories() {
 const store = new Vuex.Store({
     state: { 
         goods: [],
-        categories: []
+        categories: [],
+        basket: []
     },
     getters: {
         getGoodsByGroupId: (state) => (id) => {
@@ -56,12 +53,15 @@ const store = new Vuex.Store({
     },
     mutations: {
         setGoods(state, data) {
+            state.goods.length = 0
             Array.prototype.push.apply(state.goods, data)
         },
         setCategories(state, data) {
+            state.categories.length = 0
             Array.prototype.push.apply(state.categories, data)
-            console.log(state.categories);
-            
+        },
+        addToBasket(state, good) {
+            state.basket.push(good)
         }
     },
     actions: {

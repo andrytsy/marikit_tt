@@ -1,29 +1,29 @@
 <template>
     <div>
-        Marikit Holdings LTD
-        {{ categories.length }}
+        <a href="#/basket">В КОРЗИНУ</a>
         <section v-for="category in categories" v-bind:key="category.id">
-            {{ category }}
-            <GoodsTable :data="category" />
+            <GoodsTable :data="category" :goods="getGoods(category.id)" />
         </section>
-        <DropDown />
     </div>
 </template>
 
 <script>
 import GoodsTable from './GoodsTable'
-import DropDown from './Dropdown'
 import { mapState } from 'vuex'
 
 export default {
     name: 'Catalog',
     components: {
-        GoodsTable,
-        DropDown
+        GoodsTable
     },
     computed: mapState([ 'categories' ]),
-    mounted() {
-        this.$store.dispatch('fetchData');
+    methods: {
+        getGoods(id) {
+            return this.$store.getters.getGoodsByGroupId(id)
+        }
+    },
+    created() {
+        this.$store.dispatch('fetchData')
     }
 }
 </script>
