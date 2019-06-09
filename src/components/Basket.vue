@@ -9,24 +9,26 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="basket__content-item" v-for="good in getGoodsFromBasket" v-bind:key="good.id">
-                <td>{{ good.name }}</td>
+            <tr class="basket__item" v-for="good in getGoodsFromBasket" v-bind:key="good.id">
+                <td>
+                    {{ good.name }}
+                </td>
                 <td>
                     <input type="number" id="" min="1" v-model="good.quantity" v-on:input="chageQuantity(good)">
                 </td>
                 <td>
                     {{ good.price }}
-                    <span class="basket__content-item__small-text">/шт.</span>
+                    <span class="basket__item__small-text">/шт.</span>
                 </td>
                 <td>
-                    <span class="basket__content-item__remove-btn" v-on:click="removeFromBasket(good.id)">
+                    <span class="basket__item__remove-btn" v-on:click="removeFromBasket(good.id)">
                         Удалить
                     </span>
                 </td>
             </tr>
             <tr>
-                <td colspan="4" class="basket__content-item__sum">
-                    Общая стоимость: {{ getBasketSum }}
+                <td colspan="4" class="basket__sum">
+                    Общая стоимость: {{ getSum }}
                 </td>
             </tr>
         </tbody>
@@ -35,16 +37,17 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { REMOVE_FROM_BASKET, SET_QUANTITY } from '../store/mutations.type'
 
 export default {
     name: 'Basket',
-    computed: mapGetters([ 'getGoodsFromBasket', 'getBasketSum' ]),
+    computed: mapGetters([ 'getGoodsFromBasket', 'getSum' ]),
     methods: {
         removeFromBasket(id) {
-            this.$store.commit('removeFromBasket', id)
+            this.$store.commit(REMOVE_FROM_BASKET, id)
         },
         chageQuantity(item) {
-            this.$store.commit('setQuantity', item)
+            this.$store.commit(SET_QUANTITY, item)
         }
     }
 }
@@ -61,12 +64,8 @@ export default {
         font-size 1.2em
         padding 10px 0px
 
-    &__content-item
+    &__item
         font-size 1em
-
-        &__sum
-            margin-top 10px
-            text-align right 
 
         &__small-text
             font-size 0.8em
@@ -78,6 +77,10 @@ export default {
             color $tomato
             &:hover
                 text-decoration underline
+
+    &__sum
+        margin-top 10px
+        text-align right 
 
 th, td
     width 25%

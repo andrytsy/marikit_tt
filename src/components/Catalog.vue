@@ -1,35 +1,25 @@
 <template>
     <div>
         <section v-for="category in categories" v-bind:key="category.id">
-            <GoodsTable :data="category" :goods="getGoods(category.id)" />
+            <GoodsTable :group="category" />
         </section>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { FETCH_DATA } from '../store/actions.type'
 import GoodsTable from './GoodsTable'
 
 export default {
     name: 'Catalog',
-    components: {
-        GoodsTable
-    },
-    computed: {
-        categories() {
-            return this.$store.state.categories
-        },
-        basket() {
-            return this.$store.state.basket
-        },
-        getGoods() {
-            return this.$store.getters.getGoodsByGroupId
-        }
-    },
+    components: { GoodsTable },
+    computed: mapGetters([ 'categories' ]),
     created() {
-        this.$store.dispatch('fetchData')
+        this.$store.dispatch(FETCH_DATA)
 
         this.interval = setInterval(() => {
-            this.$store.dispatch('fetchData')
+            this.$store.dispatch(FETCH_DATA)
         }, 15000)
     },
     destroyed() {
