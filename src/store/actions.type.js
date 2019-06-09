@@ -1,1 +1,2 @@
 export const FETCH_DATA = 'FETCH_DATA'
+export const FETCH_CURRENCY_RATE = 'FETCH_CURRENCY_RATE'

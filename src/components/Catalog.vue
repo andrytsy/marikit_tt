@@ -8,7 +8,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { FETCH_DATA } from '../store/actions.type'
+import { FETCH_DATA, FETCH_CURRENCY_RATE } from '../store/actions.type'
 import GoodsTable from './GoodsTable'
 
 export default {
@@ -17,9 +17,11 @@ export default {
     computed: mapGetters([ 'categories' ]),
     created() {
         this.$store.dispatch(FETCH_DATA)
+        this.$store.dispatch(FETCH_CURRENCY_RATE)
 
         this.interval = setInterval(() => {
             this.$store.dispatch(FETCH_DATA)
+            this.$store.dispatch(FETCH_CURRENCY_RATE)
         }, 15000)
     },
     destroyed() {

@@ -1,9 +1,10 @@
 import { getGoodsData, getCategoriesData } from '../common/dataService'
-import { getRate } from '../common/currencyService'
-import { FETCH_DATA } from './actions.type'
+import { getRate, getRandomRate } from '../common/currencyService'
+import { FETCH_DATA, FETCH_CURRENCY_RATE } from './actions.type'
 import {
     SET_GOODS,
     SET_CATEGORIES,
+    SET_CURRENCY_RATE,
     ADD_TO_BASKET,
     REMOVE_FROM_BASKET,
     CHANGE_CURRENCY,
@@ -14,8 +15,9 @@ const state = {
     goods: [],
     categories: [],
     basket: [],
-    currency: 'usd',
-    currencyRate: 1
+    currency: 'rub',
+    currencyRate: 50,
+    oldRate: 50
 }
 
 const getters = {
@@ -33,6 +35,9 @@ const getters = {
     },
     currencyRate: (state) => {
         return state.currencyRate
+    },
+    oldRate: (state) => {
+        return state.oldRate
     },
     getGoodsByGroupId: (state, getters) => (id) => {
         return getters.getGoodsWithCurrentPrice(state.goods).filter(item => item.groupId === id)
@@ -69,6 +74,9 @@ const actions = {
     [FETCH_DATA]({ commit }) {
         commit(SET_GOODS, getGoodsData())
         commit(SET_CATEGORIES, getCategoriesData())
+    },
+    [FETCH_CURRENCY_RATE]({ commit }) {
+        commit(SET_CURRENCY_RATE, getRandomRate())
     }
 }
 
@@ -80,6 +88,12 @@ const mutations = {
     [SET_CATEGORIES](state, data) {
         state.categories.length = 0
         Array.prototype.push.apply(state.categories, data)
+    },
+    [SET_CURRENCY_RATE](state, currencyRate) {
+        if (state.currency === 'rub') {
+            state.oldRate = state.currencyRate
+            state.currencyRate = currencyRate
+        }
     },
     [ADD_TO_BASKET](state, good) {
         let index = state.basket.findIndex(item => item.id === good.id)

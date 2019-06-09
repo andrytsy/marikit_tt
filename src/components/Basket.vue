@@ -14,7 +14,8 @@
                     {{ good.name }}
                 </td>
                 <td>
-                    <input type="number" id="" min="1" v-model="good.quantity" v-on:input="chageQuantity(good)">
+                    <input class="basket__item__input" type="number" id="" min="1" :max="good.avalible" v-model="good.quantity" v-on:input="chageQuantity(good)">
+                    <span class="basket__item__small-text"> шт.</span>
                 </td>
                 <td>
                     {{ good.price }}
@@ -27,8 +28,9 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="4" class="basket__sum">
-                    Общая стоимость: {{ getSum }}
+                <td colspan="3"></td>
+                <td class="basket__sum">
+                    Общая стоимость: <span class="basket__sum__text">{{ getSum }}</span>
                 </td>
             </tr>
         </tbody>
@@ -67,6 +69,12 @@ export default {
     &__item
         font-size 1em
 
+        &__input
+            width 50px
+            padding 10px
+            border 1px solid $royalblue
+            color $royalblue
+
         &__small-text
             font-size 0.8em
             color $light-gray
@@ -81,6 +89,12 @@ export default {
     &__sum
         margin-top 10px
         text-align right 
+
+        &__text
+            font-size 1.2em
+            font-family 'Libre Franklin Bold'
+            color $seagreen
+
 
 th, td
     width 25%
